@@ -1,8 +1,8 @@
-#Crossword Generation Project <br />
+**Crossword Generation Project <br />**
 
-##Current features:<br />
+<ins>Current features:</ins><br />
 -empty crossword board generation<br />
-  -follows general crossword guidelines like symmetricity, number of filled squares<br />
+  -follows general crossword guidelines like [symmetricity, number of filled squares](https://en.wikipedia.org/wiki/Crossword)<br />
 
-##Currently developing:<br />
+<ins>Currently developing:</ins><br />
 -crossword word generation
