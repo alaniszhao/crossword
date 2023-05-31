@@ -10,3 +10,9 @@ class Square:
     self.filled = set
   def get_fill(self):
     return self.filled
+  def set_letter(self,letter):
+    #maybe needs some editing depending on how the user interacts with
+    #the board
+    self.written = letter
+  def check_letter(self):
+    return self.letter==self.written

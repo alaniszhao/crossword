@@ -5,6 +5,71 @@ import copy
 import time
 
 class Board:
+  def find_longest(self):
+    len_across_most = 0
+    index_across_most = -1
+    len_across_2most = 0
+    index_across_2most = -1
+    seen = 0
+    for r in range(self.size//2+1):
+      for c in range(self.size):
+        i = r*self.size+c
+        if(self.squares[i].get_fill()):
+          if(seen>len_across_most):
+            len_across_2most = len_across_most
+            index_across_2most = index_across_most
+            len_across_most = seen
+            index_across_most = i-seen+1
+          elif(seen>len_across_2most):
+            len_across_2most = seen
+            index_across_2most = i-seen+1
+          seen=0
+        else:
+          seen+=1
+      if(seen==15):
+        if(seen>len_across_most):
+          len_across_2most = len_across_most
+          index_across_2most = index_across_most
+          len_across_most = seen
+          index_across_most = i-seen+1
+        else:
+          len_across_2most = seen
+          index_across_2most = i-seen+1
+      seen = 0
+    len_down_most = 0
+    index_down_most = -1
+    len_down_2most = 0
+    index_down_2most = -1
+    seen = 0
+    for c in range(self.size//2+1):
+      for r in range(self.size):
+        i = r*self.size+c
+        if(self.squares[i].get_fill()):
+          if(seen>len_down_most):
+            len_down_2most = len_down_most
+            index_down_2most = index_down_most
+            len_down_most = seen
+            index_down_most = i-seen*self.size+1
+          elif(seen>len_down_2most):
+            len_down_2most = seen
+            index_down_2most = i-seen*self.size+1
+          seen=0
+        else:
+          seen+=1
+      if(seen==15):
+        if(seen>len_down_most):
+          len_down_2most = len_down_most
+          index_down_2most = index_down_most
+          len_down_most = seen
+          index_down_most = i-seen*self.size+1
+        else:
+          len_down_2most = seen
+          index_down_2most = i-seen*self.size+1
+      seen = 0
+    if(len_across_most>=len_down_most):
+      return (0,[(len_across_most,index_across_most),(len_across_2most,index_across_2most)])
+    return (1,[(len_down_most,index_down_most),(len_down_2most,index_down_2most)])
+
   def get_index(self, valid_indices, half):
   #returns an index to move in a direction from
     if(half==0):
@@ -53,7 +118,7 @@ class Board:
         right = random.randint(0,1)
       return (right, up)
     
-  def invalid_index(self,board):
+  def invalid_index(self,board): #maybe has bugs
     #checks if the current board has any word sizes of 1 or 2 which are invalid
     #all possible across/down words in valid crosswords have len >=3
     seen = 0
@@ -78,9 +143,7 @@ class Board:
           seen = 0
           last = seen
       seen=0
-      if(last==1):
-        #if the row ends and there is only 1 blank square(middle column) then
-        #invalid
+      if(last==1 or last==2):
         return True
     seen=0
     for col in range(self.size//2+1):
@@ -124,7 +187,7 @@ class Board:
           if(curr not in self.filled):
             poss_board[curr].set_fill(False)
         return (poss_board, False)
-      if(i%self.size>=self.size//2-1):
+      if(i%self.size>=self.size//2-1 or i//self.size>self.size//2):
         #reach the middle, still valid
         for val in indices: #this adds all filled indices to the board set
           self.filled.add(val)
@@ -157,9 +220,10 @@ class Board:
   def generate_fills(self, valid_indices):
     #generate the filled squares in the crossword
     num_squares = (self.size**2)//20
+    print(num_squares)
     count_squares = 0
     while(count_squares<num_squares):
-      timeout = time.time() + self.size//2
+      timeout = time.time() + self.size//3
       valid = False
       while(not valid): #keep generating until a valid half is created
         time.sleep(0.25)
@@ -244,11 +308,4 @@ class Board:
           vis = vis + "_ "
         else:
           vis = vis + square.get_val()
-      return vis
-
-def main():
-    x = Board(15)
-    print(x)
-
-if __name__ == "__main__":
-    main()
+      return vis+"\n"
