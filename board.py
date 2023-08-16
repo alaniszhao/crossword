@@ -219,8 +219,7 @@ class Board:
 
   def generate_fills(self, valid_indices):
     #generate the filled squares in the crossword
-    num_squares = (self.size**2)//20
-    print(num_squares)
+    num_squares = int(((self.size**2)//20)*0.9)
     count_squares = 0
     while(count_squares<num_squares):
       timeout = time.time() + self.size//3
@@ -239,8 +238,6 @@ class Board:
         #move the board in the selected direction
         #the original board will be returned in the move is invalid
         self.squares = new_board
-        print("index: "+str(index))
-        print("direction: ("+str(right)+","+str(up)+")")
         print(self)
         print("\n")
       count_squares = self.count_squares()
@@ -259,10 +256,8 @@ class Board:
         index = self.get_index(valid_indices, 1)
         (right, up) = self.generate_dirs(1)
         poss_board = copy.deepcopy(self.squares)
-        print("index: "+str(index))
         (new_board, valid) = self.move_dir(poss_board, index, right, up)
         self.squares = new_board
-        print("direction: ("+str(right)+","+str(up)+")")
         print(self)
         print("\n")
       count_squares = self.count_squares()-first_half

@@ -1,34 +1,32 @@
 from board import *
-import openai
-import config
-openai.api_key = config.api_key
-
-def choose_theme():
-    categories = []
-    categories.append(("music artists",["pop","rock","country","indie","r&b",
-                                        "classical"]))
-    categories.append(("well known people",["pop culture","politics","cooking",
-                                            "fairytales"]))
-    categories.append(("actors and actresses",["television", "movies"]))
-    categories.append(("brands",["food","clothing","cars","technology"]))
-    categories.append(("geography",["mountains","rivers","lakes","cities",
-                                    "countries","continents","oceans",
-                                    "deserts"]))
-    theme_i = random.randint(0,len(categories)-1)
-    theme = categories[theme_i]
-    theme_name = theme[0]
-    theme_type = (theme[1])[random.randint(0,len(theme)-1)]
-    return (theme_name,theme_type)
-
-def long_words(len1, len2):
-    return 0
+import os
+from PyDictionary import PyDictionary
+dictionary=PyDictionary()
 
 def main():
-    #x = Board(15)
-    #print(x)
-    for i in range(15):
-        print(choose_theme())
-    """(_,[(len1,_),(len2,_)]) = x.find_longest()
-    [word1,word2,word3,word4]=long_words(len1,len2)"""
+    starts = []
+    b = Board(7)
+    print(b)
+    print("done")
+    for row in range(b.size):
+        for col in range(b.size):
+            i = row*b.size+col
+            dirs = set()
+            if not b.squares[i].get_fill():
+                if row==0:
+                    #-1=down
+                    dirs.add(-1)
+                if col==0:
+                    #1=right
+                    dirs.add(1)
+                if i-b.size>=0 and b.squares[i-b.size].get_fill():
+                    dirs.add(-1)
+                if i-1>=0 and b.squares[i-1].get_fill():
+                    dirs.add(1)
+            if len(dirs)!=0:
+                starts.append((i,dirs))
+    print(starts)
+
+
 if __name__ == "__main__":
     main()
