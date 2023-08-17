@@ -219,7 +219,7 @@ class Board:
 
   def generate_fills(self, valid_indices):
     #generate the filled squares in the crossword
-    num_squares = int(((self.size**2)//20)*0.9)
+    num_squares = int(((self.size**2)//20)) #sometimes need to add a scaling val
     count_squares = 0
     while(count_squares<num_squares):
       timeout = time.time() + self.size//3
