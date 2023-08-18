@@ -32,8 +32,8 @@ z=[]
 
 total = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,z,y,z]
 
-def fill_crossword(starts):
-    words = []
+def fill_crossword(starts, board):
+    pass
 
 def get_list(letter):
     if letter=="a":
@@ -88,7 +88,7 @@ def get_list(letter):
         return y
     if letter=="z":
         return z
-
+        
 def search_word(beginning, l, used):
     invalid = set()
     if beginning == "":
@@ -104,12 +104,15 @@ def search_word(beginning, l, used):
                 i = random.randint(0,25)
             curr = total[i]
             for word in curr:
-                if len(word)==l:
+                if len(word)==l and word not in used:
+                    used.add(word)
                     return word
             invalid.add(i)
     letter = get_list(beginning[0])
+    letter = ["hi", "hey", "hell", "hello", "hella"]
     for word in letter:
-        if len(word)==l and beginning==word[:len(beginning)]:
+        if (len(word)==l) and (beginning==word[:len(beginning)]) and (word not in used):
+            used.add(word)
             return word
     return None
 
@@ -119,21 +122,49 @@ def main():
     for row in range(b.size):
         for col in range(b.size):
             i = row*b.size+col
-            dirs = set()
+            dirs = []
             if not b.squares[i].get_fill():
                 if row==0:
                     #-1=down
-                    dirs.add(-1)
+                    l = 0
+                    temp_i = i
+                    while(temp_i<b.size*b.size):
+                        if b.squares[temp_i].get_fill():
+                            break
+                        l+=1
+                        temp_i+=b.size
+                    dirs.append(-1,l)
                 if col==0:
                     #1=right
-                    dirs.add(1)
-                if i-b.size>=0 and b.squares[i-b.size].get_fill():
-                    dirs.add(-1)
-                if i-1>=0 and b.squares[i-1].get_fill():
-                    dirs.add(1)
+                    l = 0
+                    temp_i = i
+                    while(temp_i<b.size):
+                        if b.squares[temp_i].get_fill():
+                            break
+                        l+=1
+                        temp_i+=1
+                    dirs.append(1,l)
+                if row!=0 and i-b.size>=0 and b.squares[i-b.size].get_fill():
+                    l = 0
+                    temp_i = i
+                    while(temp_i<b.size*b.size):
+                        if b.squares[temp_i].get_fill():
+                            break
+                        l+=1
+                        temp_i+=b.size
+                    dirs.append(-1,l)
+                if col!=0 and i-1>=0 and b.squares[i-1].get_fill():
+                    l = 0
+                    temp_i = i
+                    while(temp_i<b.size):
+                        if b.squares[temp_i].get_fill():
+                            break
+                        l+=1
+                        temp_i+=1
+                    dirs.append(1,l)
             if len(dirs)!=0:
-                starts.append((i,dirs))
-    fill_crossword(starts)
+                starts.append([i,dirs])
+    words = fill_crossword(starts, b)
 
 
 if __name__ == "__main__":
