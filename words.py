@@ -32,8 +32,57 @@ z=[]
 
 total = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,z,y,z]
 
-def fill_crossword(starts, board):
-    pass
+def find_beginning(words, i, d, l, size):
+    res=""
+    curr=words[i]
+    seen = 0
+    while(curr!="" and seen<l):
+        res+=curr
+        seen+=1
+        if(d==1):
+            i+=1
+        else:
+            i+=size
+        curr=words[i]
+    return res
+
+def add_word(words, new, i, d, size):
+    for c in new:
+        words[i]=c
+        if(d==1):
+            i+=1
+        else:
+            i+=size
+
+def init_words(last):
+    words = dict()
+    for i in range(last):
+        words[i]=""
+    return words
+def fill_crossword(starts, b):
+    '''
+    starts is in the format [[i,dirs],...]
+    where dirs is a list up to length two of the index and the direction
+    of the word (down = -1, across = 1)
+    the result should be in the format [[i,dir,word]]
+    need to somehow keep track of the previous words
+    '''
+    used=set()
+    words = init_words(b.size*b.size)
+    for start in starts:
+        i=start[0]
+        for t in start[1]:
+            l=t[1]
+            d=t[0]
+            beginning = find_beginning(words, i, d,l, b.size)
+            new = search_word(beginning, l, used)
+            if(new!=None):
+                used.add(new)
+                add_word(words, new, i, d, b.size)
+            else:
+                #add this later
+                exit(1)
+    return words
 
 def get_list(letter):
     if letter=="a":
@@ -109,16 +158,14 @@ def search_word(beginning, l, used):
                     return word
             invalid.add(i)
     letter = get_list(beginning[0])
-    letter = ["hi", "hey", "hell", "hello", "hella"]
     for word in letter:
         if (len(word)==l) and (beginning==word[:len(beginning)]) and (word not in used):
             used.add(word)
             return word
     return None
 
-def main():
+def find_starts(b):
     starts = []
-    b = Board(7)
     for row in range(b.size):
         for col in range(b.size):
             i = row*b.size+col
@@ -164,8 +211,11 @@ def main():
                     dirs.append(1,l)
             if len(dirs)!=0:
                 starts.append([i,dirs])
-    words = fill_crossword(starts, b)
 
+def main():
+    b = Board(7)
+    starts=find_starts(b)
+    words = fill_crossword(starts, b)
 
 if __name__ == "__main__":
     main()
