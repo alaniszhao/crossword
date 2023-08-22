@@ -70,6 +70,7 @@ def fill_crossword(starts, b):
     used=set()
     words = init_words(b.size*b.size)
     for start in starts:
+        print(start)
         i=start[0]
         for t in start[1]:
             l=t[1]
@@ -77,6 +78,7 @@ def fill_crossword(starts, b):
             beginning = find_beginning(words, i, d,l, b.size)
             new = search_word(beginning, l, used)
             if(new!=None):
+                print(new)
                 used.add(new)
                 add_word(words, new, i, d, b.size)
             else:
@@ -86,56 +88,186 @@ def fill_crossword(starts, b):
 
 def get_list(letter):
     if letter=="a":
+        if(a==[]):
+            f = open("A.txt", "r")
+            data = f.read()
+            a = data.split("\n")
+            f.close()
         return a
     if letter=="b":
+        if(b==[]):
+            f = open("B.txt", "r")
+            data = f.read()
+            b = data.split("\n")
+            f.close()
         return b
     if letter=="c":
+        if(c==[]):
+            f = open("C.txt", "r")
+            data = f.read()
+            c = data.split("\n")
+            f.close()
         return c
     if letter=="d":
+        if(d==[]):
+            f = open("D.txt", "r")
+            data = f.read()
+            d = data.split("\n")
+            f.close()
         return d
     if letter=="e":
+        if(e==[]):
+            f = open("E.txt", "r")
+            data = f.read()
+            e = data.split("\n")
+            f.close()
         return e
     if letter=="f":
+        if(f==[]):
+            fi = open("F.txt", "r")
+            data = fi.read()
+            f = data.split("\n")
+            fi.close()
         return f
     if letter=="g":
+        if(g==[]):
+            f = open("G.txt", "r")
+            data = f.read()
+            g = data.split("\n")
+            f.close()
         return g
     if letter=="h":
+        if(h==[]):
+            f = open("H.txt", "r")
+            data = f.read()
+            h = data.split("\n")
+            f.close()
         return h
     if letter=="i":
+        if(i==[]):
+            f = open("I.txt", "r")
+            data = f.read()
+            i = data.split("\n")
+            f.close()
         return i
     if letter=="j":
+        if(j==[]):
+            f = open("J.txt", "r")
+            data = f.read()
+            j = data.split("\n")
+            f.close()
         return j
     if letter=="k":
+        if(k==[]):
+            f = open("K.txt", "r")
+            data = f.read()
+            k = data.split("\n")
+            f.close()
         return k
     if letter=="l":
+        if(l==[]):
+            f = open("L.txt", "r")
+            data = f.read()
+            l = data.split("\n")
+            f.close()
         return l
     if letter=="m":
+        if(m==[]):
+            f = open("M.txt", "r")
+            data = f.read()
+            m = data.split("\n")
+            f.close()
         return m
     if letter=="n":
+        if(n==[]):
+            f = open("N.txt", "r")
+            data = f.read()
+            n = data.split("\n")
+            f.close()
         return n
     if letter=="o":
+        if(o==[]):
+            f = open("O.txt", "r")
+            data = f.read()
+            o = data.split("\n")
+            f.close()
         return o
     if letter=="p":
+        if(p==[]):
+            f = open("P.txt", "r")
+            data = f.read()
+            p = data.split("\n")
+            f.close()
         return p
     if letter=="q":
+        if(q==[]):
+            f = open("Q.txt", "r")
+            data = f.read()
+            q = data.split("\n")
+            f.close()
         return q
     if letter=="r":
+        if(r==[]):
+            f = open("R.txt", "r")
+            data = f.read()
+            r = data.split("\n")
+            f.close()
         return r
     if letter=="s":
+        if(s==[]):
+            f = open("S.txt", "r")
+            data = f.read()
+            s = data.split("\n")
+            f.close()
         return s
     if letter=="t":
+        if(t==[]):
+            f = open("T.txt", "r")
+            data = f.read()
+            t = data.split("\n")
+            f.close()
         return t
     if letter=="u":
+        if(u==[]):
+            f = open("U.txt", "r")
+            data = f.read()
+            u = data.split("\n")
+            f.close()
         return u
     if letter=="v":
+        if(v==[]):
+            f = open("V.txt", "r")
+            data = f.read()
+            v = data.split("\n")
+            f.close()
         return v
     if letter=="w":
+        if(w==[]):
+            f = open("W.txt", "r")
+            data = f.read()
+            w = data.split("\n")
+            f.close()
         return w
     if letter=="x":
+        if(x==[]):
+            f = open("X.txt", "r")
+            data = f.read()
+            x = data.split("\n")
+            f.close()
         return x
     if letter=="y":
+        if(y==[]):
+            f = open("Y.txt", "r")
+            data = f.read()
+            y = data.split("\n")
+            f.close()
         return y
     if letter=="z":
+        if(z==[]):
+            f = open("Z.txt", "r")
+            data = f.read()
+            z = data.split("\n")
+            f.close()
         return z
         
 def search_word(beginning, l, used):
@@ -213,9 +345,11 @@ def find_starts(b):
                 starts.append([i,dirs])
 
 def main():
-    b = Board(7)
+    b = Board(9)
+    print("DONE")
     starts=find_starts(b)
     words = fill_crossword(starts, b)
+    print(words)
 
 if __name__ == "__main__":
     main()

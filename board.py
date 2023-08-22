@@ -80,7 +80,10 @@ class Board:
            or (i in self.filled)):
       #check that the index isn't too close to an edge, too close to the middle
       #check that the index isn't already filled
+        self.invalid.add(i)
         i=random.randint(0,(self.size//2+1)**2)
+        while(i in self.invalid):
+          i=random.randint(0,(self.size//2+1)**2)
       return valid_indices.get(i)
     #lower half generation
     i=random.randint((self.size//2+1)**2,len(valid_indices)-1)
@@ -88,7 +91,10 @@ class Board:
           (valid_indices.get(i))//self.size in {1,2, self.size-2, self.size-3}
           or (i in self.filled)):
       #checks same as above
+      self.invalid.add(i)
       i=random.randint((self.size//2+1)**2,len(valid_indices)-1)
+      while(i in self.invalid):
+        i=random.randint((self.size//2+1)**2,len(valid_indices)-1)
     return valid_indices.get(i)
   
   def count_squares(self):
@@ -168,6 +174,7 @@ class Board:
     return False
    
   def move_dir(self, poss_board, i, right, up):
+    print("trying " + str(i))
     #move from index i in the corresponding direction
     num_moves = self.size//10+random.randint(1,3)
     #random # of moves
@@ -221,8 +228,8 @@ class Board:
     #generate the filled squares in the crossword
     num_squares = int(((self.size**2)//20)) #sometimes need to add a scaling val
     count_squares = 0
+    timeout = time.time() + self.size//2
     while(count_squares<num_squares):
-      timeout = time.time() + self.size//3
       valid = False
       while(not valid): #keep generating until a valid half is created
         time.sleep(0.25)
@@ -230,7 +237,7 @@ class Board:
           #sometimes an impossible board is generated, start over in this case
           self.clear(0)
           count_squares=0
-          break
+          timeout = time.time() + self.size//2
         index = self.get_index(valid_indices, 0)
         (right, up) = self.generate_dirs(0)
         poss_board = copy.deepcopy(self.squares)
@@ -243,21 +250,23 @@ class Board:
       count_squares = self.count_squares()
     first_half = count_squares
     count_squares = 0
+    timeout = time.time() + self.size//2
     while(count_squares<num_squares):
       #same as above for the lower half
-      timeout = time.time() + self.size//2
       valid = False
       while(not valid):
         time.sleep(0.25)
         if time.time() > timeout:
+          return
+          timeout = time.time() + self.size//2
           self.clear(1)
           count_squares=0
-          break
         index = self.get_index(valid_indices, 1)
         (right, up) = self.generate_dirs(1)
         poss_board = copy.deepcopy(self.squares)
         (new_board, valid) = self.move_dir(poss_board, index, right, up)
         self.squares = new_board
+        print("generating lower")
         print(self)
         print("\n")
       count_squares = self.count_squares()-first_half
@@ -278,6 +287,7 @@ class Board:
     self.squares=[]
     self.size = size
     self.filled = set()
+    self.invalid = set()
     for i in range(size*size): #create an empty board
       self.squares.append(Square())
     limit = size//2 + 1
