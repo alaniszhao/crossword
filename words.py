@@ -30,7 +30,7 @@ x=[]
 y=[]
 z=[]
 
-total = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,z,y,z]
+total = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r","s","t","u","v","w","x","y","z"]
 
 def find_beginning(words, i, d, l, size):
     res=""
@@ -70,7 +70,6 @@ def fill_crossword(starts, b):
     used=set()
     words = init_words(b.size*b.size)
     for start in starts:
-        print(start)
         i=start[0]
         for t in start[1]:
             l=t[1]
@@ -87,212 +86,219 @@ def fill_crossword(starts, b):
     return words
 
 def get_list(letter):
+    global a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
     if letter=="a":
         if(a==[]):
-            f = open("A.txt", "r")
-            data = f.read()
+            fi = open("poss_words/A.txt", "r")
+            data = fi.read()
             a = data.split("\n")
-            f.close()
+            fi.close()
         return a
     if letter=="b":
         if(b==[]):
-            f = open("B.txt", "r")
-            data = f.read()
+            fi = open("poss_words/B.txt", "r")
+            data = fi.read()
             b = data.split("\n")
-            f.close()
+            fi.close()
         return b
     if letter=="c":
         if(c==[]):
-            f = open("C.txt", "r")
-            data = f.read()
+            fi = open("poss_words/C.txt", "r")
+            data = fi.read()
             c = data.split("\n")
-            f.close()
+            fi.close()
         return c
     if letter=="d":
         if(d==[]):
-            f = open("D.txt", "r")
-            data = f.read()
+            fi = open("poss_words/D.txt", "r")
+            data = fi.read()
             d = data.split("\n")
-            f.close()
+            fi.close()
         return d
     if letter=="e":
         if(e==[]):
-            f = open("E.txt", "r")
-            data = f.read()
-            e = data.split("\n")
-            f.close()
-        return e
-    if letter=="f":
-        if(f==[]):
-            fi = open("F.txt", "r")
+            fi = open("poss_words/E.txt", "r")
             data = fi.read()
-            f = data.split("\n")
+            e = data.split("\n")
             fi.close()
-        return f
+        return e
+    if letter=="fi":
+        if(fi==[]):
+            fi = open("poss_words/fi.txt", "r")
+            data = fi.read()
+            fi = data.split("\n")
+            fi.close()
+        return fi
     if letter=="g":
         if(g==[]):
-            f = open("G.txt", "r")
-            data = f.read()
+            fi = open("poss_words/G.txt", "r")
+            data = fi.read()
             g = data.split("\n")
-            f.close()
+            fi.close()
         return g
     if letter=="h":
         if(h==[]):
-            f = open("H.txt", "r")
-            data = f.read()
+            fi = open("poss_words/H.txt", "r")
+            data = fi.read()
             h = data.split("\n")
-            f.close()
+            fi.close()
         return h
     if letter=="i":
         if(i==[]):
-            f = open("I.txt", "r")
-            data = f.read()
+            fi = open("poss_words/I.txt", "r")
+            data = fi.read()
             i = data.split("\n")
-            f.close()
+            fi.close()
         return i
     if letter=="j":
         if(j==[]):
-            f = open("J.txt", "r")
-            data = f.read()
+            fi = open("poss_words/J.txt", "r")
+            data = fi.read()
             j = data.split("\n")
-            f.close()
+            fi.close()
         return j
     if letter=="k":
         if(k==[]):
-            f = open("K.txt", "r")
-            data = f.read()
+            fi = open("poss_words/K.txt", "r")
+            data = fi.read()
             k = data.split("\n")
-            f.close()
+            fi.close()
         return k
     if letter=="l":
         if(l==[]):
-            f = open("L.txt", "r")
-            data = f.read()
+            fi = open("poss_words/L.txt", "r")
+            data = fi.read()
             l = data.split("\n")
-            f.close()
+            fi.close()
         return l
     if letter=="m":
         if(m==[]):
-            f = open("M.txt", "r")
-            data = f.read()
+            fi = open("poss_words/M.txt", "r")
+            data = fi.read()
             m = data.split("\n")
-            f.close()
+            fi.close()
         return m
     if letter=="n":
         if(n==[]):
-            f = open("N.txt", "r")
-            data = f.read()
+            fi = open("poss_words/N.txt", "r")
+            data = fi.read()
             n = data.split("\n")
-            f.close()
+            fi.close()
         return n
     if letter=="o":
         if(o==[]):
-            f = open("O.txt", "r")
-            data = f.read()
+            fi = open("poss_words/O.txt", "r")
+            data = fi.read()
             o = data.split("\n")
-            f.close()
+            fi.close()
         return o
     if letter=="p":
         if(p==[]):
-            f = open("P.txt", "r")
-            data = f.read()
+            fi = open("poss_words/P.txt", "r")
+            data = fi.read()
             p = data.split("\n")
-            f.close()
+            fi.close()
         return p
     if letter=="q":
         if(q==[]):
-            f = open("Q.txt", "r")
-            data = f.read()
+            fi = open("poss_words/Q.txt", "r")
+            data = fi.read()
             q = data.split("\n")
-            f.close()
+            fi.close()
         return q
     if letter=="r":
         if(r==[]):
-            f = open("R.txt", "r")
-            data = f.read()
+            fi = open("poss_words/R.txt", "r")
+            data = fi.read()
             r = data.split("\n")
-            f.close()
+            fi.close()
         return r
     if letter=="s":
         if(s==[]):
-            f = open("S.txt", "r")
-            data = f.read()
+            fi = open("poss_words/S.txt", "r")
+            data = fi.read()
             s = data.split("\n")
-            f.close()
+            fi.close()
         return s
     if letter=="t":
         if(t==[]):
-            f = open("T.txt", "r")
-            data = f.read()
+            fi = open("poss_words/T.txt", "r")
+            data = fi.read()
             t = data.split("\n")
-            f.close()
+            fi.close()
         return t
     if letter=="u":
         if(u==[]):
-            f = open("U.txt", "r")
-            data = f.read()
+            fi = open("poss_words/U.txt", "r")
+            data = fi.read()
             u = data.split("\n")
-            f.close()
+            fi.close()
         return u
     if letter=="v":
         if(v==[]):
-            f = open("V.txt", "r")
-            data = f.read()
+            fi = open("poss_words/V.txt", "r")
+            data = fi.read()
             v = data.split("\n")
-            f.close()
+            fi.close()
         return v
     if letter=="w":
         if(w==[]):
-            f = open("W.txt", "r")
-            data = f.read()
+            fi = open("poss_words/W.txt", "r")
+            data = fi.read()
             w = data.split("\n")
-            f.close()
+            fi.close()
         return w
     if letter=="x":
         if(x==[]):
-            f = open("X.txt", "r")
-            data = f.read()
+            fi = open("poss_words/X.txt", "r")
+            data = fi.read()
             x = data.split("\n")
-            f.close()
+            fi.close()
         return x
     if letter=="y":
         if(y==[]):
-            f = open("Y.txt", "r")
-            data = f.read()
+            fi = open("poss_words/Y.txt", "r")
+            data = fi.read()
             y = data.split("\n")
-            f.close()
+            fi.close()
         return y
     if letter=="z":
         if(z==[]):
-            f = open("Z.txt", "r")
-            data = f.read()
+            fi = open("poss_words/Z.txt", "r")
+            data = fi.read()
             z = data.split("\n")
-            f.close()
+            fi.close()
         return z
         
 def search_word(beginning, l, used):
     invalid = set()
     if beginning == "":
         i = random.randint(0,25)
-        curr = total[i]
+        i=0
+        curr = get_list(total[i])
         for word in curr:
+            print("trying "+word)
             if len(word)==l:
+                print("USING "+word)
                 return word
         invalid.add(i)
         while(True):
             i = random.randint(0,25)
             while(i in invalid):
                 i = random.randint(0,25)
-            curr = total[i]
+            curr = get_list(total[i])
             for word in curr:
+                print("trying "+word)
                 if len(word)==l and word not in used:
                     used.add(word)
+                    print(word)
                     return word
             invalid.add(i)
     letter = get_list(beginning[0])
     for word in letter:
         if (len(word)==l) and (beginning==word[:len(beginning)]) and (word not in used):
             used.add(word)
+            print(word)
             return word
     return None
 
@@ -312,17 +318,18 @@ def find_starts(b):
                             break
                         l+=1
                         temp_i+=b.size
-                    dirs.append(-1,l)
+                    dirs.append([-1,l])
                 if col==0:
                     #1=right
                     l = 0
                     temp_i = i
-                    while(temp_i<b.size):
+                    lim = ((i+b.size)//b.size)*b.size
+                    while(temp_i<lim and temp_i<b.size*b.size):
                         if b.squares[temp_i].get_fill():
                             break
                         l+=1
                         temp_i+=1
-                    dirs.append(1,l)
+                    dirs.append([1,l])
                 if row!=0 and i-b.size>=0 and b.squares[i-b.size].get_fill():
                     l = 0
                     temp_i = i
@@ -331,23 +338,26 @@ def find_starts(b):
                             break
                         l+=1
                         temp_i+=b.size
-                    dirs.append(-1,l)
+                    dirs.append([-1,l])
                 if col!=0 and i-1>=0 and b.squares[i-1].get_fill():
                     l = 0
                     temp_i = i
-                    while(temp_i<b.size):
+                    lim = ((i+b.size)//b.size)*b.size
+                    while(temp_i<lim and temp_i<b.size*b.size):
                         if b.squares[temp_i].get_fill():
                             break
                         l+=1
                         temp_i+=1
-                    dirs.append(1,l)
+                    dirs.append([1,l])
             if len(dirs)!=0:
                 starts.append([i,dirs])
+    return starts
 
 def main():
-    b = Board(9)
-    print("DONE")
+    b = Board(7)
     starts=find_starts(b)
+    print(b)
+    print(starts)
     words = fill_crossword(starts, b)
     print(words)
 

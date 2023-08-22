@@ -290,6 +290,10 @@ class Board:
     self.invalid = set()
     for i in range(size*size): #create an empty board
       self.squares.append(Square())
+    for i in range(size*size):
+      if (i in [3,10,21,27,38,45]):
+        self.squares[i].set_fill(True)
+    return
     limit = size//2 + 1
     valid = dict()
     index=0
