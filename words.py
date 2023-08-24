@@ -34,6 +34,7 @@ total = ["a","b","c","d","e","f","g","h","i","j","k","l","m","n","o","p","q","r"
 
 def find_beginning(words, i, d, l, size):
     res=""
+    additional=[]
     curr=words[i]
     seen = 0
     while(curr!="" and seen<l):
@@ -44,7 +45,30 @@ def find_beginning(words, i, d, l, size):
         else:
             i+=size
         curr=words[i]
-    return res
+    if seen==l:
+        i_new=0
+        for r in res:
+            additional.append((i_new,r))
+            i_new+=1
+        return res,additional
+    while(seen<l-1):
+        if curr!="":
+            additional.append((seen, curr))
+        seen+=1
+        if(d==1):
+            i+=1
+        else:
+            i+=size
+        curr=words[i]
+    r=""
+    for i in range(0, 49, 7):
+        for j in range(i, i+7):
+            if words[j]!="":
+                r+=words[j]+" "
+            else:
+                r+="# "
+        r+="\n"
+    return res,additional
 
 def add_word(words, new, i, d, size):
     for c in new:
@@ -59,7 +83,8 @@ def init_words(last):
     for i in range(last):
         words[i]=""
     return words
-def fill_crossword(starts, b):
+
+def fill_crossword(starts, b, used):
     '''
     starts is in the format [[i,dirs],...]
     where dirs is a list up to length two of the index and the direction
@@ -67,23 +92,42 @@ def fill_crossword(starts, b):
     the result should be in the format [[i,dir,word]]
     need to somehow keep track of the previous words
     '''
-    used=set()
     words = init_words(b.size*b.size)
+    last = None
+    tried = []
     for start in starts:
         i=start[0]
-        for t in start[1]:
+        i_t = 0
+        while(i_t<len(start[1])):
+            t=start[1][i_t]
             l=t[1]
             d=t[0]
-            beginning = find_beginning(words, i, d,l, b.size)
-            new = search_word(beginning, l, used)
+            beginning, additional = find_beginning(words, i, d,l, b.size)
+            new = search_word(beginning, l, used, additional)
             if(new!=None):
-                print(new)
                 used.add(new)
+                tried.append(words)
                 add_word(words, new, i, d, b.size)
+                i_t+=1
             else:
-                #add this later
-                exit(1)
+                words = tried.pop()
+        print(start)
+        res=""
+        for i in range(0, 49, 7):
+            for j in range(i, i+7):
+                if words[j]!="":
+                    res+=words[j]+" "
+                else:
+                    res+="# "
+            res+="\n"
+        print(res)
     return words
+
+def check_word(additional, word):
+    for curr in additional:
+        if word[curr[0]]!=curr[1]:
+            return False
+    return True
 
 def get_list(letter):
     global a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z
@@ -122,13 +166,13 @@ def get_list(letter):
             e = data.split("\n")
             fi.close()
         return e
-    if letter=="fi":
-        if(fi==[]):
-            fi = open("poss_words/fi.txt", "r")
+    if letter=="f":
+        if(f==[]):
+            fi = open("poss_words/f.txt", "r")
             data = fi.read()
-            fi = data.split("\n")
+            f = data.split("\n")
             fi.close()
-        return fi
+        return f
     if letter=="g":
         if(g==[]):
             fi = open("poss_words/G.txt", "r")
@@ -270,16 +314,13 @@ def get_list(letter):
             fi.close()
         return z
         
-def search_word(beginning, l, used):
+def search_word(beginning, l, used, additional):
     invalid = set()
     if beginning == "":
         i = random.randint(0,25)
-        i=0
         curr = get_list(total[i])
         for word in curr:
-            print("trying "+word)
-            if len(word)==l:
-                print("USING "+word)
+            if len(word)==l and check_word(additional, word):
                 return word
         invalid.add(i)
         while(True):
@@ -288,17 +329,23 @@ def search_word(beginning, l, used):
                 i = random.randint(0,25)
             curr = get_list(total[i])
             for word in curr:
-                print("trying "+word)
-                if len(word)==l and word not in used:
+                if len(word)==l and word not in used and check_word(additional, word):
                     used.add(word)
-                    print(word)
                     return word
             invalid.add(i)
+            if len(invalid)==26:
+                return None
     letter = get_list(beginning[0])
+    if len(additional)==l:
+        w = ""
+        for a in additional:
+            w+=a[1]
+        if w in letter:
+            return w
+        return None
     for word in letter:
-        if (len(word)==l) and (beginning==word[:len(beginning)]) and (word not in used):
+        if (len(word)==l) and (beginning==word[:len(beginning)]) and (word not in used) and check_word(additional, word):
             used.add(word)
-            print(word)
             return word
     return None
 
@@ -351,15 +398,27 @@ def find_starts(b):
                     dirs.append([1,l])
             if len(dirs)!=0:
                 starts.append([i,dirs])
+    print(starts)
     return starts
 
 def main():
     b = Board(7)
     starts=find_starts(b)
-    print(b)
-    print(starts)
-    words = fill_crossword(starts, b)
+    used=set()
+    words = fill_crossword(starts, b, used)
+    while(words==None):
+        words = fill_crossword(starts, b, used)
     print(words)
+    res=""
+    for i in range(0, 49, 7):
+        for j in range(i, i+7):
+            if words[j]!="":
+                res+=words[j]+" "
+            else:
+                res+="# "
+        res+="\n"
+    print(res)
+
 
 if __name__ == "__main__":
     main()
